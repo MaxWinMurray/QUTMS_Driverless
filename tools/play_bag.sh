@@ -9,32 +9,38 @@ source install/setup.bash
 # BAG_CMD="ros2 bag play -s mcap /mnt/e/rosbag2_2024_07_25-05_04_46/ --clock -p" # half lap
 # BAG_CMD="ros2 bag play -s mcap /mnt/e/rosbag2_2024_07_25-05_18_42/ --clock -p" # other half of lap
 # BAG_CMD="ros2 bag play -s mcap /mnt/e/rosbag2_2024_09_04-05_14_43 --clock -p" # 2.5 laps
-BAG_CMD="ros2 bag play -s mcap /mnt/e/rosbag2_2024_09_24-02_11_49/ --clock -p" 
+# BAG_CMD="ros2 bag play -s mcap /mnt/e/rosbag2_2024_09_24-02_11_49/ --clock -p" 
 # BAG_CMD="ros2 bag play -s mcap /mnt/e/rosbag2_2024_09_24-02_16_55/ --clock -p" # ebs test run
 # BAG_CMD="ros2 bag play -s mcap /mnt/e/rosbag2_2024_10_18-01_10_29/ --clock -p" # 9 laps, recording from 1st corner
 # BAG_CMD="ros2 bag play -s mcap /mnt/e/rosbag2_2024_10_18-01_40_49 --clock -p" # 10 laps recording from 2nd lap, 1st corner
-# BAG_CMD="ros2 bag play -s mcap /mnt/e/rosbag2_2024_10_30-04_40_17 --clock -p" # 14 laps recording from 2nd lap, 1st corner
-# BAG_CMD="ros2 bag play -s mcap /mnt/e/rosbag2_2024_11_01-19_02_10 --clock -p" # 14 laps recording from 2nd lap, 1st corner
+# BAG_CMD="ros2 bag play -s mcap /mnt/d/rosbag2_2024_10_18-04_47_04 --clock -p" # 14 laps recording from 2nd lap, 1st corner
+# BAG_CMD="ros2 bag play -s mcap /mnt/d/trackdrive-2024-11-20-02-48-40 --clock -p" #
+# BAG_CMD="ros2 bag play -s mcap /mnt/d/trackdrive-2024-11-25-00-43-28 --clock -p" # QR 4.5 laps
+# BAG_CMD="ros2 bag play -s mcap /mnt/d/rosbag2_2024_11_12-02_49_14 --clock -p"
+BAG_CMD="ros2 bag play -s mcap /mnt/d/ebs_test-2024-12-07-05-26-36 --clock -p" # ebs crash
 
 TOPICS=(
-    # # for mapping debugging
-    # /imu/odometry # needed for RL
-    # /vehicle/wheel_twist # needed for RL
-    # # /lidar/objects
+    # for mapping debugging
+    /imu/odometry # needed for RL
+    /vehicle/wheel_twist # needed for RL
+    /system/av_state # needed for lap = 0 in mapping
+    /system/ros_state # needed for lap = 0 in mapping
+
+    # for detection and mapping debugging
+    /lidar/objects
+    /lidar/ground_plane
     # /lidar/converted_2D_scan
     # /lidar/cone_detection
-    # # /debug_markers/lidar_markers
-    # /system/av_state # needed for lap = 0 in mapping
-    # /system/ros_state # needed for lap = 0 in mapping
+    # /debug_markers/lidar_markers
 
     # raw data for visuals (nice to always have)
-    # /imu/nav_sat_fix
-    # /vehicle/velocity
-    # /vehicle/steering_angle
-    # /imu/data
-    # /control/driving_command
+    /imu/nav_sat_fix
+    /vehicle/velocity
+    /vehicle/steering_angle
+    /imu/data
+    # /velodyne_points # only some bags
 
-    # # for fast lap debugging
+    # for fast lap debugging
     # /tf
     # /tf_static
     # /odometry/filtered
@@ -43,8 +49,6 @@ TOPICS=(
     # /slam/pose
     # /slam/graph_visualization
 
-    /lidar/objects
-    /lidar/ground_plane
 )
 
 # remap these topics if you are running programs which output to the same topic names

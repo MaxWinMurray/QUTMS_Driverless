@@ -140,7 +140,7 @@ def get_occupancy_grid(blue_points, yellow_points, header):
 class FaSTTUBeBoundaryExtractor(Node):
     current_track = None
     spline_const = 10  # number of points per cone
-    initial_planning = True
+    initial_planning = False
 
     def __init__(self):
         super().__init__("ft_planner_node")
@@ -186,6 +186,7 @@ class FaSTTUBeBoundaryExtractor(Node):
 
     def get_planner_cfg(self):
         self.declare_parameter("mission", MissionTypes.trackdrive)
+        self.declare_parameter("experimental_performance_improvements", True)
 
         # cone sorting
         self.declare_parameter("max_n_neighbors", 5)
@@ -247,6 +248,7 @@ class FaSTTUBeBoundaryExtractor(Node):
             "cone_fitting_kwargs": cone_fitting_kwargs,
             "path_calculation_kwargs": path_calculation_kwargs,
             "cone_matching_kwargs": cone_matching_kwargs,
+            "experimental_performance_improvements": self.get_parameter("experimental_performance_improvements").value,
         }
 
     def detection_callback(self, track_msg: ConeDetectionStamped):
